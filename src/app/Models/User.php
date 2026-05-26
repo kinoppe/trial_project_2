@@ -21,7 +21,19 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
+        'email-verified_at',
     ];
+    
+    public function attendances()
+    {
+        return $this->hasMany(Attendance::class);
+    }
+
+    public function correctionRequests()
+    {
+        return $this->hasMany(AttendanceCorrectionRequest::class);
+    }
 
     /**
      * The attributes that should be hidden for serialization.
