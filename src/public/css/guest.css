@@ -1,0 +1,20 @@
+body {
+    margin: 0;
+}
+
+.header {
+    background: #000;
+}
+
+.header__inner {
+    display: flex;
+    margin: 0 auto;
+    max-width: 1230px;
+    padding: 10px 0;
+    align-items: center;
+}
+
+.header__logo {
+    color: #fff;
+    font-size: 30px;
+}

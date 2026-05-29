@@ -17,13 +17,13 @@ class CreateAttendanceCorrectionRequestsTable extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('attendance_id')->constrained()->onDelete('cascade');
-            $table->time('request_clock_in');
-            $table->time('request_clock_out');
+            $table->time('request_clock_in')->nullable();
+            $table->time('request_clock_out')->nullable();
             $table->text('note');
             $table->enum('status',['pending','approved'])->default('pending');
-            $table->foreignId('approve_by')->nullable()
+            $table->foreignId('approved_by')->nullable()
             ->constrained('users')->nullOnDelete();
-            $table->timestamp('approve_at')->nullable();
+            $table->timestamp('approved_at')->nullable();
             $table->timestamps();
         });
     }

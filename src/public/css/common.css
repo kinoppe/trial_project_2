@@ -1,0 +1,53 @@
+html {
+    overflow-y: scroll;
+}
+
+body {
+    margin: 0;
+}
+
+.header {
+    background: #000;
+}
+
+.header__inner {
+    display: flex;
+    margin: 0 auto;
+    max-width: 1230px;
+    padding: 10px 0;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.header__logo {
+    color: #fff;
+    font-size: 30px;
+}
+
+.header__nav {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 30px;
+    padding-right: 20px;
+}
+
+.header__nav a {
+    font-size: 20px;
+    text-decoration: none;
+}
+
+.attendance,
+.attendance__list,
+.attendance__detail {
+    color: #fff;
+}
+
+.logout__link {
+    background: none;
+    color: #fff;
+    border: none;
+    padding: 0;
+    font-size: 20px;
+    cursor: pointer;
+}
