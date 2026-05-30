@@ -15,6 +15,8 @@ use App\Http\Controllers\AttendanceController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('/login');
 });
-Route::get('/attendance', [AttendanceController::class,'index']);
+Route::middleware('auth')->group(function () {
+    Route::get('/attendance', [AttendanceController::class,'index']);
+});
