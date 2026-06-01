@@ -49,7 +49,7 @@
         @endif
 
         @if($status === 'after_work')
-        <p>お疲れ様でした。</p>
+        <p class="clock-out">お疲れ様でした。</p>
         @endif
     </div>
 </div>

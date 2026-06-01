@@ -8,12 +8,14 @@ body {
 
 .header {
     background: #000;
+    height: 80px;
 }
 
 .header__inner {
+    height: 100%;
     display: flex;
     margin: 0 auto;
-    max-width: 1230px;
+    max-width: 1540px;
     padding: 10px 0;
     align-items: center;
     justify-content: space-between;
@@ -37,7 +39,7 @@ body {
     text-decoration: none;
 }
 
-.attendance,
+.attendance__top,
 .attendance__list,
 .attendance__detail {
     color: #fff;

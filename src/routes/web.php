@@ -19,4 +19,8 @@ Route::get('/', function () {
 });
 Route::middleware('auth')->group(function () {
     Route::get('/attendance', [AttendanceController::class,'index']);
+    Route::post('/attendance', [AttendanceController::class,'store']);
+    Route::post('/attendance/update', [AttendanceController::class,'update']);
+    Route::post('/attendance/break_start', [AttendanceController::class,'breakStart']);
+    Route::post('/attendance/break_end', [AttendanceController::class,'breakEnd']);
 });

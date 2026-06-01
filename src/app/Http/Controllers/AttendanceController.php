@@ -20,7 +20,7 @@ class AttendanceController extends Controller
         } elseif($attendance->clock_out) {
             $status = 'after_work';
             $statusLabel = '退勤済';
-        } elseif($attendance->breaks()->whereNull('break_end')->exists()) {
+        } elseif($attendance->breakTimes()->whereNull('break_end')->exists()) {
             $status = 'on_break';
             $statusLabel = '休憩中';
         } else {
@@ -33,7 +33,7 @@ class AttendanceController extends Controller
     public function store()
     {
         $exists = Attendance::where('user_id',auth()->id())
-        ->whereData('work_date',today())
+        ->whereDate('work_date',today())
         ->exists();
 
         if($exists) {

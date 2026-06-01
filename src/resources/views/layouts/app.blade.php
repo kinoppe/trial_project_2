@@ -14,7 +14,7 @@
                 <img src="{{ asset('storage/icons/CoachTech_White 1 (1).png') }}">
 
             <nav class="header__nav">
-                <a class="attendance" href="/attendance">勤怠</a>
+                <a class="attendance__top" href="/attendance">勤怠</a>
                 <a class="attendance__list" href="/attendance/list">勤怠一覧</a>
                 <a class="attendance__detail" href="">申請</a>
                 <form action="/logout" method="post">
