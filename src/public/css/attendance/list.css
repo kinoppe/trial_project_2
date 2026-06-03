@@ -1,0 +1,31 @@
+.attendance-list {
+    width: 60%;
+    margin: 0 auto;
+    max-width: 1540px;
+}
+
+.attendance-list__title {
+    margin-top: 80px;
+}
+
+.attendance-list__month {
+    display: flex;
+    justify-content: space-between;
+    border-radius: 10px;
+    background: #fff;
+    align-items: center;
+    padding: 0 20px;
+    font-weight: bold;
+    margin-bottom: 30px;
+}
+
+.attendance-list__month a {
+    text-decoration: none;
+    color: #777;
+}
+
+.attendance-table {
+    width: 100%;
+    background: #fff;
+    border-radius: 10px;
+}

@@ -30,16 +30,18 @@
         </form>
         @endif
 
-        @if($status === 'working')
-        <form action="/attendance/update" method="post">
-            @csrf
-            <button class="attendance__button">退勤</button>
-        </form>
-        <form action="/attendance/break_start" method="post">
-            @csrf
-            <button class="break__button">休憩入</button>
-        </form>
-        @endif
+        <div class="attendance-working">
+            @if($status === 'working')
+            <form action="/attendance/update" method="post">
+                @csrf
+                <button class="attendance__button">退勤</button>
+            </form>
+            <form action="/attendance/break_start" method="post">
+                @csrf
+                <button class="break__button">休憩入</button>
+            </form>
+            @endif
+        </div>
 
         @if($status === 'on_break')
         <form action="/attendance/break_end" method="post">

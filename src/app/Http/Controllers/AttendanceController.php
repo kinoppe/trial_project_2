@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
+use Carbon\CarbonPeriod;
 use App\Models\Attendance;
 use App\Models\BreakTime;
 use Illuminate\Http\Request;
@@ -88,5 +90,67 @@ class AttendanceController extends Controller
             'clock_out' => now(),
         ]);
         return redirect('/attendance');
+    }
+
+    public function list(Request $request)
+    {
+        $month = $request->input('month')
+            ? Carbon::parse($request->input('month'))
+            : now();
+
+        $startOfMonth = $month->copy()->startOfMonth();
+        $endOfMonth = $month->copy()->endOfMonth();
+
+        $attendances = Attendance::where('user_id', auth()->id())
+            ->whereBetween('work_date',[
+                $startOfMonth->toDateString(),
+                $endOfMonth->toDateString()
+            ])
+            ->with('breakTimes')
+            ->get()
+            ->keyBy('work_date');
+
+        $dates = CarbonPeriod::create($startOfMonth, $endOfMonth);
+
+        $records = [];
+        foreach($dates as $date) {
+            $attendance = $attendances->get($date->format('Y-m-d'));
+            $breakMinutes = $attendance
+                ? $attendance->breakTimes->sum('break_minutes')
+                : 0;
+
+            $workMinutes = '';
+            if($attendance && $attendance->clock_in && $attendance->clock_out) {
+                $workMinutes = Carbon::parse($attendance->clock_in)
+                    ->diffInMinutes(Carbon::parse($attendance->clock_out))
+                    - $breakMinutes;
+                $workMinutes = sprintf(
+                    '%d:%02d',
+                    floor($workMinutes / 60),
+                    $workMinutes % 60
+                );
+            }
+
+            $records[] = [
+                'date' => $date->format('m/d'),
+                'week' => ['日','月','火','水','木','金','土',][$date->dayOfWeek],
+                'clock_in' => $attendance && $attendance->clock_in
+                    ? Carbon::parse($attendance->clock_in)->format('H:i')
+                    : '',
+                'clock_out' => $attendance && $attendance->clock_out
+                    ? Carbon::parse($attendance->clock_out)->format('H:i')
+                    : '',
+                'break_time' => $attendance
+                    ? sprintf(
+                        '%d:%02d',
+                        floor($breakMinutes / 60),
+                        $breakMinutes % 60
+                    )
+                    : '',
+                'total_time' => $workMinutes,
+                'attendance_id' => $attendance?->id,
+            ];
+        }
+        return view('attendance.list',compact('month','records'));
     }
 }
