@@ -28,4 +28,25 @@
     width: 100%;
     background: #fff;
     border-radius: 10px;
+    margin-bottom: 100px;
+}
+
+.attendance-table__header {
+    color: #777;
+    border-bottom: 3px solid #ddd;
+    height: 50px;
+    text-align: center;
+}
+
+.attendance-table__description {
+    color: #777;
+    border-bottom: 1px solid #ddd;
+    height: 50px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.attendance-table__detail {
+    text-decoration: none;
+    color: #000;
 }

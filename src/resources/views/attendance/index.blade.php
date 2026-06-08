@@ -32,7 +32,7 @@
 
         <div class="attendance-working">
             @if($status === 'working')
-            <form action="/attendance/update" method="post">
+            <form action="/attendance/clock_out" method="post">
                 @csrf
                 <button class="attendance__button">退勤</button>
             </form>

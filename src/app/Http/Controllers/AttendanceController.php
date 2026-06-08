@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Carbon\CarbonPeriod;
 use App\Models\Attendance;
 use App\Models\BreakTime;
+use App\Models\AttendanceCorrectionRequest;
 use Illuminate\Http\Request;
 
 class AttendanceController extends Controller
@@ -32,7 +33,7 @@ class AttendanceController extends Controller
         return view('attendance.index',compact('attendance','status','statusLabel'));
     }
 
-    public function store()
+    public function clockIn()
     {
         $exists = Attendance::where('user_id',auth()->id())
         ->whereDate('work_date',today())
@@ -80,7 +81,7 @@ class AttendanceController extends Controller
         return redirect('/attendance');
     }
 
-    public function update()
+    public function clockOut()
     {
         $attendance = Attendance::where('user_id',auth()->id())
         ->whereDate('work_date',today())
@@ -102,13 +103,12 @@ class AttendanceController extends Controller
         $endOfMonth = $month->copy()->endOfMonth();
 
         $attendances = Attendance::where('user_id', auth()->id())
-            ->whereBetween('work_date',[
-                $startOfMonth->toDateString(),
-                $endOfMonth->toDateString()
-            ])
+            ->whereBetween('work_date',[$startOfMonth->toDateString(),$endOfMonth->toDateString()])
             ->with('breakTimes')
             ->get()
-            ->keyBy('work_date');
+            ->keyBy(function ($attendance) {
+                return Carbon::parse($attendance->work_date)->format('Y-m-d');
+            });
 
         $dates = CarbonPeriod::create($startOfMonth, $endOfMonth);
 
@@ -124,14 +124,12 @@ class AttendanceController extends Controller
                 $workMinutes = Carbon::parse($attendance->clock_in)
                     ->diffInMinutes(Carbon::parse($attendance->clock_out))
                     - $breakMinutes;
-                $workMinutes = sprintf(
-                    '%d:%02d',
-                    floor($workMinutes / 60),
-                    $workMinutes % 60
-                );
+                $workMinutes = sprintf('%d:%02d',floor($workMinutes / 60),$workMinutes % 60);
             }
 
             $records[] = [
+                'date_key' => $date->format('Y-m-d'),
+                
                 'date' => $date->format('m/d'),
                 'week' => ['日','月','火','水','木','金','土',][$date->dayOfWeek],
                 'clock_in' => $attendance && $attendance->clock_in
@@ -141,16 +139,31 @@ class AttendanceController extends Controller
                     ? Carbon::parse($attendance->clock_out)->format('H:i')
                     : '',
                 'break_time' => $attendance
-                    ? sprintf(
-                        '%d:%02d',
-                        floor($breakMinutes / 60),
-                        $breakMinutes % 60
-                    )
+                    ? sprintf('%d:%02d',floor($breakMinutes / 60),$breakMinutes % 60)
                     : '',
                 'total_time' => $workMinutes,
                 'attendance_id' => $attendance?->id,
             ];
         }
         return view('attendance.list',compact('month','records'));
+    }
+
+    public function show($date)
+    {
+        $attendance = Attendance::with(['user','breakTimes'])
+            ->where('user_id',auth()->id())
+            ->whereDate('work_date',$date)
+            ->first();
+
+        $pendingRequest = null;
+
+        if($attendance) {
+            $pendingRequest = AttendanceCorrectionRequest::with('breaks')
+            ->where('attendance_id',$attendance->id)
+            ->where('user_id',auth()->id())
+            ->where('status','pending')
+            ->first();
+        }
+        return view('attendance.show',compact('attendance','pendingRequest','date'));
     }
 }

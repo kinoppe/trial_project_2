@@ -19,7 +19,7 @@
     </div>
 
     <table class="attendance-table">
-        <tr>
+        <tr class="attendance-table__header">
             <th>日付</th>
             <th>出勤</th>
             <th>退勤</th>
@@ -29,16 +29,14 @@
         </tr>
 
         @foreach($records as $record)
-        <tr>
-            <td>{{$record['date']}}</td>
+        <tr class="attendance-table__description">
+            <td>{{$record['date']}}({{$record['week']}})</td>
             <td>{{$record['clock_in']}}</td>
             <td>{{$record['clock_out']}}</td>
             <td>{{$record['break_time']}}</td>
             <td>{{$record['total_time']}}</td>
             <td>
-                @if($record['attendance_id'])
-                <a href="/attendance/detail/{{$record['attendance_id']}}">詳細</a>
-                @endif
+                <a class="attendance-table__detail" href="/attendance/detail/{{$record['date_key']}}">詳細</a>
             </td>
         </tr>
         @endforeach

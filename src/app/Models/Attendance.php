@@ -15,6 +15,12 @@ class Attendance extends Model
         'clock_out',
     ];
 
+    protected $casts = [
+        'work_date' => 'date',
+        'clock_in' => 'datetime:H:i',
+        'clock_out' => 'datetime:H:i',
+    ];
+
     public function user()
     {
         return $this->belongsTo(User::class);
