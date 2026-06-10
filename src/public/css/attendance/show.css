@@ -79,3 +79,8 @@
     font-size: 18px;
     cursor: pointer;
 }
+
+.attendance-detail__pending-message {
+    text-align: right;
+    color: #ff3434;
+}

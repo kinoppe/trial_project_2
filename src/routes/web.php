@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AttendanceController;
-use App\Http\Controllers\CorrectionRequestController;
+use App\Http\Controllers\AttendanceCorrectionRequestController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,5 +26,5 @@ Route::middleware('auth')->group(function () {
     Route::post('/attendance/break_end', [AttendanceController::class,'breakEnd']);
     Route::get('/attendance/list', [AttendanceController::class,'list']);
     Route::get('/attendance/detail/{date}', [AttendanceController::class,'show']);
-    Route::post('/attendance/detail/{date}', [CorrectionRequestController::class,'store']);
+    Route::post('/attendance/detail/{date}', [AttendanceCorrectionRequestController::class,'store']);
 });

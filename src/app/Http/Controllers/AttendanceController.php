@@ -162,6 +162,7 @@ class AttendanceController extends Controller
             ->where('attendance_id',$attendance->id)
             ->where('user_id',auth()->id())
             ->where('status','pending')
+            ->latest()
             ->first();
         }
         return view('attendance.show',compact('attendance','pendingRequest','date'));

@@ -30,9 +30,9 @@
         <tr class="detail-table-row">
             <th>出勤・退勤</th>
             <td class="detail-table__time">
-                <span>{{$pendingRequest->clock_in}}</span>
+                <span>{{$pendingRequest->request_clock_in}}</span>
                 <span>〜</span>
-                <span>{{$pendingRequest->clock_out}}</span>
+                <span>{{$pendingRequest->request_clock_out}}</span>
             </td>
         </tr>
 
@@ -53,7 +53,7 @@
 
         <tr class="detail-table-row">
             <th>備考</th>
-            <td>{{$pendingRequest->reason}}</td>
+            <td>{{$pendingRequest->note}}</td>
         </tr>
     </table>
 
@@ -120,7 +120,7 @@
             <tr class="detail-table-row">
                 <th>備考</th>
                 <td>
-                    <textarea class="detail-table__note" name="reason" id="">{{old('reason')}}</textarea>
+                    <textarea class="detail-table__note" name="note" id="">{{old('note')}}</textarea>
                 </td>
             </tr>
         </table>
