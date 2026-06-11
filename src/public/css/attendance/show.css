@@ -84,3 +84,9 @@
     text-align: right;
     color: #ff3434;
 }
+
+.form-error {
+    color: red;
+    flex: none;
+    font-weight: 100;
+}
