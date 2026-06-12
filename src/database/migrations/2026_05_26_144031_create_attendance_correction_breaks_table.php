@@ -16,8 +16,8 @@ class CreateAttendanceCorrectionBreaksTable extends Migration
         Schema::create('attendance_correction_breaks', function (Blueprint $table) {
             $table->id();
             $table->foreignId('attendance_correction_request_id');
-            $table->time('break_start')->nullable();
-            $table->time('break_end')->nullable();
+            $table->dateTime('break_start')->nullable();
+            $table->dateTime('break_end')->nullable();
             $table->timestamps();
 
             $table->foreign('attendance_correction_request_id', 'correction_breaks_request_fk')

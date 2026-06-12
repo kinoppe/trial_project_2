@@ -27,4 +27,5 @@ Route::middleware('auth')->group(function () {
     Route::get('/attendance/list', [AttendanceController::class,'list']);
     Route::get('/attendance/detail/{date}', [AttendanceController::class,'show']);
     Route::post('/attendance/detail/{date}', [AttendanceCorrectionRequestController::class,'store']);
+    Route::get('/stamp_correction_request/list', [AttendanceCorrectionRequestController::class,'index']);
 });

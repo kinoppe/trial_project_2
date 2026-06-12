@@ -49,4 +49,16 @@ class AttendanceCorrectionRequestController extends Controller
 
         return redirect('/attendance/detail/' . $date);
     }
+
+    public function index(Request $request)
+    {
+        $status = $request->input('status','pending');
+
+        $requests = AttendanceCorrectionRequest::with(['user','attendance'])
+            ->where('user_id',auth()->id())
+            ->where('status',$status)
+            ->latest()
+            ->get();
+        return view('request.index',compact('requests','status'));
+    }
 }

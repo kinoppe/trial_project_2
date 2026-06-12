@@ -116,7 +116,14 @@ class AttendanceController extends Controller
         foreach($dates as $date) {
             $attendance = $attendances->get($date->format('Y-m-d'));
             $breakMinutes = $attendance
-                ? $attendance->breakTimes->sum('break_minutes')
+                ? $attendance->breakTimes->sum(function ($break) {
+                    if (!$break->break_start || !$break->break_end) {
+                        return 0;
+                    }
+
+                    return Carbon::parse($break->break_start)
+                        ->diffInMinutes(Carbon::parse($break->break_end));
+                })
                 : 0;
 
             $workMinutes = '';

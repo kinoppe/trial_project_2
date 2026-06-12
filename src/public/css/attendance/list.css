@@ -50,3 +50,8 @@
     text-decoration: none;
     color: #000;
 }
+
+.attendance__icon {
+    width: 20px;
+    height: 20px;
+}
