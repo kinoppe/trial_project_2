@@ -12,30 +12,36 @@
 <div class="request-list">
     <h1 class="request-list__title">| 申請一覧</h1>
 
-    <div class="request-list__pending">
-        <a href="{{ /stamp_correction_request/list('request.index', ['status' => 'pending']) }}">承認待ち</a>
-        <a href="{{ route('request.index', ['status' => 'approved']) }}">承認済み</a>
+    <div class="request-list__tabs">
+        <a class="{{ $status === 'pending' ? 'active' : '' }}"
+        href="/stamp_correction_request/list?status=pending">
+            承認待ち
+        </a>
+        <a class="{{ $status === 'approved' ? 'active' : '' }}"
+        href="/stamp_correction_request/list?status=approved">
+            承認済み
+        </a>
     </div>
 
-    <table class="attendance-table">
-        <tr class="attendance-table__header">
-            <th>日付</th>
-            <th>出勤</th>
-            <th>退勤</th>
-            <th>休憩</th>
-            <th>合計</th>
+    <table class="request-table">
+        <tr class="request-table__header">
+            <th>状態</th>
+            <th>名前</th>
+            <th>対象日時</th>
+            <th>申請理由</th>
+            <th>申請日時</th>
             <th>詳細</th>
         </tr>
 
-        @foreach($records as $record)
-        <tr class="attendance-table__description">
-            <td>{{$record['date']}}({{$record['week']}})</td>
-            <td>{{$record['clock_in']}}</td>
-            <td>{{$record['clock_out']}}</td>
-            <td>{{$record['break_time']}}</td>
-            <td>{{$record['total_time']}}</td>
+        @foreach($requests as $request)
+        <tr class="request-table__description">
+            <td>{{ $request->status === 'pending' ? '承認待ち' : '承認済み' }}</td>
+            <td>{{ $request->attendance->user->name }}</td>
+            <td>{{ \Carbon\Carbon::parse($request->attendance->work_date)->format('Y/m/d') }}</td>
+            <td>{{ $request->note }}</td>
+            <td>{{ $request->created_at->format('Y/m/d') }}</td>
             <td>
-                <a class="attendance-table__detail" href="/attendance/detail/{{$record['date_key']}}">詳細</a>
+                <a class="request-table__detail" href="/attendance/detail/{{ $request->attendance->work_date }}">詳細</a>
             </td>
         </tr>
         @endforeach

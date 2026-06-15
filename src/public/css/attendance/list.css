@@ -55,3 +55,14 @@
     width: 20px;
     height: 20px;
 }
+
+.attendance__icon-last {
+    width: 20px;
+    height: 20px;
+}
+
+.attendance__icon-next {
+    width: 20px;
+    height: 20px;
+    transform: scaleX(-1);
+}

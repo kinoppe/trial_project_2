@@ -14,13 +14,15 @@
 
     <div class="attendance-list__month">
         <a href="/attendance/list?month={{$month->copy()->subMonth()->format('Y-m')}}">
-            <img class="attendance__icon" src="{{ asset('storage/icons/088deff71873c09816bca59dd0d7efa7308e8fba.png') }}"> 前月
+            <img class="attendance__icon-last" src="{{ asset('storage/icons/088deff71873c09816bca59dd0d7efa7308e8fba.png') }}"> 前月
         </a>
         <p>
             <img class="attendance__icon" src="{{ asset('storage/icons/50f4850c610ecd6f85b7ef666143260b91151a78.png') }}">
             {{$month->format('Y/m')}}
         </p>
-        <a href="/attendance/list?month={{$month->copy()->addMonth()->format('Y-m')}}">翌月 ▶︎</a>
+        <a href="/attendance/list?month={{$month->copy()->addMonth()->format('Y-m')}}">翌月 
+            <img class="attendance__icon-next" src="{{ asset('storage/icons/088deff71873c09816bca59dd0d7efa7308e8fba.png') }}">
+        </a>
     </div>
 
     <table class="attendance-table">
