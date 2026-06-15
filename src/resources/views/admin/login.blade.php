@@ -13,7 +13,7 @@
     <div class="admin-login-form__heading">
         <h1>管理者ログイン</h1>
     </div>
-    <div class="admin-login-form__content">
+    <div class="admin-form__content">
         <form class="form" action="/admin/login" method="post">
             @csrf
             <div class="admin-form__group">

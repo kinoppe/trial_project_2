@@ -17,6 +17,7 @@
                 <a class="attendance__top" href="/attendance">勤怠</a>
                 <a class="attendance__list" href="/attendance/list">勤怠一覧</a>
                 <a class="attendance__detail" href="/stamp_correction_request/list">申請</a>
+                <a class="attendance__report" href="/attendance/report">レポート</a>
                 <form action="/logout" method="post">
                     @csrf
                     <button class="logout__link">ログアウト</button>

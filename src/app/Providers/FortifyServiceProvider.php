@@ -65,6 +65,18 @@ class FortifyServiceProvider extends ServiceProvider
                 ]);
             }
 
+            if ($request->is('admin/login') && ! $user->is_admin) {
+                throw ValidationException::withMessages([
+                    'email' => ['管理者アカウントではありません'],
+                ]);
+            }
+
+            if ($request->is('login') && $user->is_admin) {
+                throw ValidationException::withMessages([
+                    'email' => ['一般ユーザーとしてログインできません'],
+                ]);
+            }
+
             return $user;
         });
     }

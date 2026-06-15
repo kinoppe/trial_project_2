@@ -27,10 +27,9 @@ class AttendanceCorrectionRequestController extends Controller
         );
 
         $AttendanceCorrectionRequest = AttendanceCorrectionRequest::create([
-            'user_id' => auth()->id(),
             'attendance_id' => $attendance->id,
-            'request_clock_in' => $request->clock_in,
-            'request_clock_out' => $request->clock_out,
+            'request_clock_in' => Carbon::parse($workDate . ' ' . $request->clock_in),
+            'request_clock_out' => Carbon::parse($workDate . ' ' . $request->clock_out),
             'note' => $request->note,
             'status' => 'pending',
         ]);
@@ -42,8 +41,8 @@ class AttendanceCorrectionRequestController extends Controller
 
             AttendanceCorrectionBreak::create([
                 'attendance_correction_request_id' => $AttendanceCorrectionRequest->id,
-                'break_start' => $break['break_start'],
-                'break_end' => $break['break_end'],
+                'break_start' => Carbon::parse($workDate . ' ' . $break['break_start']),
+                'break_end' => Carbon::parse($workDate . ' ' . $break['break_end']),
             ]);
         }
 
@@ -55,7 +54,6 @@ class AttendanceCorrectionRequestController extends Controller
         $status = $request->input('status','pending');
 
         $requests = AttendanceCorrectionRequest::with(['user','attendance'])
-            ->where('user_id',auth()->id())
             ->where('status',$status)
             ->latest()
             ->get();

@@ -158,7 +158,6 @@ class AttendanceController extends Controller
     public function show($date)
     {
         $attendance = Attendance::with(['user','breakTimes'])
-            ->where('user_id',auth()->id())
             ->whereDate('work_date',$date)
             ->first();
 
@@ -167,8 +166,10 @@ class AttendanceController extends Controller
         if($attendance) {
             $pendingRequest = AttendanceCorrectionRequest::with('breaks')
             ->where('attendance_id',$attendance->id)
-            ->where('user_id',auth()->id())
             ->where('status','pending')
+            ->whereHas('attendance', function ($query) {
+                $query->where('user_id', auth()->id());
+            })
             ->latest()
             ->first();
         }

@@ -42,7 +42,8 @@ body {
 
 .attendance__top,
 .attendance__list,
-.attendance__detail {
+.attendance__detail,
+.attendance__report {
     color: #fff;
 }
 

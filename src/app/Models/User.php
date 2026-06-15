@@ -21,7 +21,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'role',
+        'is_admin',
         'email-verified_at',
     ];
     
@@ -33,6 +33,11 @@ class User extends Authenticatable
     public function correctionRequests()
     {
         return $this->hasMany(AttendanceCorrectionRequest::class);
+    }
+
+    public function isAdmin():bool
+    {
+        return(bool)$this->is_admin;
     }
 
     /**
