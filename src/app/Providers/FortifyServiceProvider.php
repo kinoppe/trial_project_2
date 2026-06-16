@@ -15,6 +15,7 @@ use App\Http\Requests\LoginRequest;
 use Laravel\Fortify\Http\Requests\LoginRequest as FortifyLoginRequest;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Support\Facades\RateLimiter;
+use Laravel\Fortify\Contracts\LoginResponse;
 
 
 class FortifyServiceProvider extends ServiceProvider
@@ -45,6 +46,19 @@ class FortifyServiceProvider extends ServiceProvider
             FortifyRegisterRequest::class,
             RegisterRequest::class
         );
+
+        $this->app->singleton(LoginResponse::class, function () {
+            return new class implements LoginResponse {
+                public function toResponse($request)
+                {
+                    if (auth()->user()->is_admin) {
+                        return redirect('/admin/attendance/list');
+                    }
+
+                    return redirect('/attendance');
+                }
+            };
+        });
 
         Fortify::createUsersUsing(CreateNewUser::class);
 

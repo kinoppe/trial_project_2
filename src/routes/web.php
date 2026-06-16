@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\AttendanceCorrectionRequestController;
+use App\Http\Controllers\AdminAttendanceController;
 use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController;
 
 /*
@@ -26,6 +27,10 @@ Route::get('/admin/login', function () {
 
 Route::post('/admin/login', [AuthenticatedSessionController::class, 'store'])
     ->middleware('guest');
+
+Route::middleware(['auth', 'admin'])->group(function () {
+    Route::get('/admin/attendance/list', [AdminAttendanceController::class, 'list']);
+});
 
 Route::middleware('auth')->group(function () {
     Route::get('/attendance', [AttendanceController::class,'index']);
