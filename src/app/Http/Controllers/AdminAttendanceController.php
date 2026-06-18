@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Attendance;
 use Carbon\Carbon;
+use App\Models\AttendanceCorrectionRequest;
+use App\Http\Requests\AttendanceCorrectionRequestRequest;
 
 class AdminAttendanceController extends Controller
 {
@@ -56,5 +58,63 @@ class AdminAttendanceController extends Controller
             ];
         }
         return view('admin.attendance.list',compact('records','date'));
+    }
+
+    public function show($id)
+    {
+        $attendance = Attendance::with(['user','breakTimes'])
+            ->findOrFail($id);
+
+        $date = $attendance->work_date;
+
+            $pendingRequest = AttendanceCorrectionRequest::with('breaks')
+            ->where('attendance_id',$attendance->id)
+            ->where('status','pending')
+            ->latest()
+            ->first();
+
+        $isAdmin = true;
+
+        return view('attendance.show',compact('attendance','pendingRequest','date','isAdmin'));
+    }
+
+    public function update(AttendanceCorrectionRequestRequest $request, $id)
+    {
+        $attendance = Attendance::with('breakTimes')->findOrFail($id);
+
+        $workDate = Carbon::parse($attendance->work_date)->toDateString();
+
+        $attendance->update([
+            'clock_in' => $workDate . ' ' . $request->clock_in,
+            'clock_out' => $workDate . ' ' . $request->clock_out,
+            'note' => $request->note,
+        ]);
+
+        foreach ($request->breaks ?? [] as $index => $break) {
+
+            // 開始も終了も空なら何もしない
+            if (empty($break['break_start']) && empty($break['break_end'])) {
+                continue;
+            }
+
+            if (isset($attendance->breakTimes[$index])) {
+
+                // 既存の休憩を更新
+                $attendance->breakTimes[$index]->update([
+                    'break_start' => $workDate.' '.$break['break_start'],
+                    'break_end' => $workDate.' '.$break['break_end'],
+                ]);
+
+            } else {
+
+                // 新しい休憩を追加
+                $attendance->breakTimes()->create([
+                    'break_start' => $workDate.' '.$break['break_start'],
+                    'break_end' => $workDate.' '.$break['break_end'],
+                ]);
+            }
+        }
+
+        return redirect('/admin/attendance/list');
     }
 }

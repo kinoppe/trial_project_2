@@ -173,6 +173,8 @@ class AttendanceController extends Controller
             ->latest()
             ->first();
         }
-        return view('attendance.show',compact('attendance','pendingRequest','date'));
+
+        $isAdmin = false;
+        return view('attendance.show',compact('attendance','pendingRequest','date','isAdmin'));
     }
 }

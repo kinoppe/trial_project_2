@@ -14,8 +14,8 @@
                 <img src="{{ asset('storage/icons/CoachTech_White 1 (1).png') }}">
 
             <nav class="header__nav">
-                <a class="attendance__top" href="/attendance">勤怠一覧</a>
-                <a class="attendance__list" href="/attendance/list">スタッフ一覧</a>
+                <a class="attendance__top" href="/admin/attendance/list">勤怠一覧</a>
+                <a class="attendance__list" href="/admin/staff/list">スタッフ一覧</a>
                 <a class="attendance__detail" href="/stamp_correction_request/list">申請一覧</a>
                 <form action="/logout" method="post">
                     @csrf

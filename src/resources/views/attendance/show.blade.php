@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends($isAdmin ? 'layouts.admin' : 'layouts.app')
 
 @section('title')
 勤怠一覧
@@ -60,7 +60,7 @@
     <p class="attendance-detail__pending-message">*承認待ちのため修正はできません。</p>
 
     @else
-    <form action="/attendance/detail/{{$date}}" method="post">
+    <form action="{{$isAdmin ? '/admin/attendance/'.$attendance->id : '/attendance/detail/'.$date}}" method="post">
         @csrf
         <table class="attendance-detail__table">
             <tr class="detail-table-row">

@@ -5,6 +5,8 @@ use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\AttendanceCorrectionRequestController;
 use App\Http\Controllers\AdminAttendanceController;
 use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController;
+use App\Http\Controllers\AdminStaffController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -30,6 +32,10 @@ Route::post('/admin/login', [AuthenticatedSessionController::class, 'store'])
 
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin/attendance/list', [AdminAttendanceController::class, 'list']);
+    Route::get('/admin/attendance/{id}', [AdminAttendanceController::class, 'show']);
+    Route::post('/admin/attendance/{id}', [AdminAttendanceController::class, 'update']);
+    Route::get('/admin/staff/list', [AdminStaffController::class, 'index']);
+    Route::get('/admin/attendance/staff/{id}', [AdminStaffController::class, 'showAttendance']);
 });
 
 Route::middleware('auth')->group(function () {
