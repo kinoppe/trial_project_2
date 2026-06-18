@@ -32,7 +32,7 @@ class AttendanceSeeder extends Seeder
             'is_admin' => false,
         ]);
 
-        for ($i = 1; $i <= 10; $i++) {
+        for ($i = 1; $i <= 15; $i++) {
             $date = Carbon::today()->subDays($i);
 
             $attendance = Attendance::create([
@@ -55,7 +55,7 @@ class AttendanceSeeder extends Seeder
         ]);
 
         foreach ($users as $user) {
-            for ($i = 1; $i <= 10; $i++) {
+            for ($i = 1; $i <= 15; $i++) {
                 $date = Carbon::today()->subDays($i);
 
                 $attendance = Attendance::create([

@@ -1,6 +1,7 @@
 .staff-list {
     width: 60%;
     margin: 70px auto;
+    max-width: 1540px;
 }
 
 .staff-list__title {
@@ -12,30 +13,27 @@
 
 .staff-list__table {
     width: 100%;
-    border-collapse: collapse;
     background: #fff;
-    border-radius: 6px;
-    overflow: hidden;
+    border-radius: 10px;
 }
 
-.staff-list__table th,
-.staff-list__table td {
-    padding: 14px 20px;
+.staff-list__table-head {
+    height: 50px;
     text-align: center;
-    border-bottom: 1px solid #ddd;
-}
-
-.staff-list__table th {
+    border-bottom: 3px solid #ddd;
     color: #777;
-    font-size: 14px;
-}
-
-.staff-list__table td {
-    color: #555;
     font-weight: bold;
 }
 
-.staff-list__table a {
+.staff-list__table-description {
+    height: 50px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+    color: #777;
+    font-weight: bold;
+}
+
+.staff-list__detail {
     color: #000;
     text-decoration: none;
     font-weight: bold;

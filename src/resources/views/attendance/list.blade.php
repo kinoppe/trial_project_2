@@ -10,7 +10,7 @@
 
 @section('content')
 <div class="attendance-list">
-    <h1 class="attendance-list__title">| 勤怠一覧</h1>
+    <h1 class="attendance-list__title">勤怠一覧</h1>
 
     <div class="attendance-list__month">
         <a href="/attendance/list?month={{$month->copy()->subMonth()->format('Y-m')}}">

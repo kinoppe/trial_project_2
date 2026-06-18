@@ -10,7 +10,7 @@
 
 @section('content')
 <div class="attendance-detail">
-    <h1 class="attendance-detail__title">| 勤怠詳細</h1>
+    <h1 class="attendance-detail__title">勤怠詳細</h1>
 
     @if($pendingRequest)
     <table class="attendance-detail__table">

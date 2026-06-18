@@ -1,11 +1,14 @@
 .request-list {
     width: 60%;
-    margin: 0 auto;
+    margin: 70px auto;
     max-width: 1540px;
 }
 
 .request-list__title {
-    margin-top: 80px;
+    font-size: 24px;
+    border-left: 5px solid #000;
+    padding-left: 15px;
+    margin-bottom: 50px;
 }
 
 .request-list__tabs {

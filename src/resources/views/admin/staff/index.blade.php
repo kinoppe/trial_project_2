@@ -13,18 +13,18 @@
     <h1 class="staff-list__title">スタッフ一覧</h1>
 
     <table class="staff-list__table">
-        <tr>
+        <tr class="staff-list__table-head">
             <th>名前</th>
             <th>メールアドレス</th>
             <th>月次勤怠</th>
         </tr>
 
         @foreach($users as $user)
-        <tr>
+        <tr class="staff-list__table-description">
             <td>{{$user->name}}</td>
             <td>{{$user->email}}</td>
             <td>
-                <a href="/admin/attendance/staff/{{$user->id}}">詳細</a>
+                <a class="staff-list__detail"href="/admin/attendance/staff/{{$user->id}}">詳細</a>
             </td>
         </tr>
         @endforeach

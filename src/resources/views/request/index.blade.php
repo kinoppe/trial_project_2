@@ -10,7 +10,7 @@
 
 @section('content')
 <div class="request-list">
-    <h1 class="request-list__title">| 申請一覧</h1>
+    <h1 class="request-list__title">申請一覧</h1>
 
     <div class="request-list__tabs">
         <a class="{{ $status === 'pending' ? 'active' : '' }}"
