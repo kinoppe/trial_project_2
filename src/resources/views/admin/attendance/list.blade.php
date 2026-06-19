@@ -10,7 +10,7 @@
 
 @section('content')
 <div class="admin-attendance-list">
-    <h1 class="admin-attendance-list__title">| {{$date->format('Y年n月j日')}}の勤怠</h1>
+    <h1 class="admin-attendance-list__title">{{$date->format('Y年n月j日')}}の勤怠</h1>
 
     <div class="admin-attendance-list__date">
         <a href="/admin/attendance/list?date={{$date->copy()->subDay()->format('Y-m-d')}}">

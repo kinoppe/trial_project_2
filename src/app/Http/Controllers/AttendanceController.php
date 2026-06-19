@@ -136,7 +136,6 @@ class AttendanceController extends Controller
 
             $records[] = [
                 'date_key' => $date->format('Y-m-d'),
-                
                 'date' => $date->format('m/d'),
                 'week' => ['日','月','火','水','木','金','土',][$date->dayOfWeek],
                 'clock_in' => $attendance && $attendance->clock_in

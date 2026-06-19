@@ -10,7 +10,7 @@
 
 @section('content')
 <div class="staff-attendance">
-    <h1 class="staff-attendance-list__title">{{$user->name}}さんの勤怠一覧</h1>
+    <h1 class="staff-attendance__title">{{$user->name}}さんの勤怠一覧</h1>
 
     <div class="staff-attendance__month">
         <a href="/admin/attendance/staff/{{$user->id}}?month={{$month->copy()->subMonth()->format('Y-m')}}">
@@ -43,10 +43,14 @@
             <td>{{$record['break_time']}}</td>
             <td>{{$record['total_time']}}</td>
             <td>
-                <a class="staff-attendance-table__detail" href="/admin/attendance/{{$record['attendance']->id}}">詳細</a>
+                <a class="staff-attendance-table__detail" href="/admin/attendance/{{$record['date_key']}}">詳細</a>
             </td>
         </tr>
         @endforeach
     </table>
+
+    <div class="attendance-csv__button">
+        <button class="attendance-csv__button-submit" type="submit">CSV出力</button>
+    </div>
 </div>
 @endsection
