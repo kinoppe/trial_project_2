@@ -60,8 +60,11 @@
     <p class="attendance-detail__pending-message">*承認待ちのため修正はできません。</p>
 
     @else
-    <form action="{{$isAdmin ? '/admin/attendance/'.$attendance->id : '/attendance/detail/'.$date}}" method="post">
+    <form action="{{ $isAdmin ? '/admin/attendance/'.\Carbon\Carbon::parse($date)->format('Y-m-d') : '/attendance/detail/'.$date }}" method="post">
         @csrf
+        @if($isAdmin)
+            <input type="hidden" name="user_id" value="{{ $user->id }}">
+        @endif
         <table class="attendance-detail__table">
             <tr class="detail-table-row">
                 <th>名前</th>
@@ -120,7 +123,6 @@
                         {{$message}}
                     @enderror
                     </div>
-                    
                 </td>
             </tr>
             @endforeach

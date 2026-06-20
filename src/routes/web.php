@@ -32,8 +32,8 @@ Route::post('/admin/login', [AuthenticatedSessionController::class, 'store'])
 
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin/attendance/list', [AdminAttendanceController::class, 'list']);
-    Route::get('/admin/attendance/{id}', [AdminAttendanceController::class, 'show']);
-    Route::post('/admin/attendance/{id}', [AdminAttendanceController::class, 'update']);
+    Route::get('/admin/attendance/{date}', [AdminAttendanceController::class, 'show']);
+    Route::post('/admin/attendance/{date}', [AdminAttendanceController::class, 'update']);
     Route::get('/admin/staff/list', [AdminStaffController::class, 'index']);
     Route::get('/admin/attendance/staff/{id}', [AdminStaffController::class, 'showAttendance']);
 });

@@ -60,57 +60,81 @@ class AdminAttendanceController extends Controller
         return view('admin.attendance.list',compact('records','date'));
     }
 
-    public function show($id)
+    public function show(Request $request,$date)
     {
-        $attendance = Attendance::with(['user','breakTimes'])
-            ->findOrFail($id);
+        $userId = $request->query('user_id');
 
-        $date = $attendance->work_date;
+        $user = User::where('is_admin', false)->findOrFail($userId);
 
-            $pendingRequest = AttendanceCorrectionRequest::with('breaks')
-            ->where('attendance_id',$attendance->id)
-            ->where('status','pending')
-            ->latest()
+        $attendance = Attendance::with(['user', 'breakTimes'])
+            ->where('user_id', $user->id)
+            ->whereDate('work_date', $date)
             ->first();
+
+        $pendingRequest = null;
+
+        if ($attendance) {
+            $pendingRequest = AttendanceCorrectionRequest::with('breaks')
+                ->where('attendance_id', $attendance->id)
+                ->where('status', 'pending')
+                ->latest()
+                ->first();
+        }
 
         $isAdmin = true;
 
-        return view('attendance.show',compact('attendance','pendingRequest','date','isAdmin'));
+        return view('attendance.show', compact(
+            'attendance',
+            'pendingRequest',
+            'date',
+            'isAdmin',
+            'user'
+        ));
     }
 
-    public function update(AttendanceCorrectionRequestRequest $request, $id)
+    public function update(AttendanceCorrectionRequestRequest $request, $date)
     {
-        $attendance = Attendance::with('breakTimes')->findOrFail($id);
+        $userId = $request->input('user_id');
 
-        $workDate = Carbon::parse($attendance->work_date)->toDateString();
+        $user = User::where('is_admin', false)->findOrFail($userId);
 
-        $attendance->update([
-            'clock_in' => $workDate . ' ' . $request->clock_in,
-            'clock_out' => $workDate . ' ' . $request->clock_out,
-            'note' => $request->note,
-        ]);
+        $attendance = Attendance::with('breakTimes')
+            ->where('user_id', $user->id)
+            ->whereDate('work_date', $date)
+            ->first();
+
+        $workDate = Carbon::parse($date)->toDateString();
+
+        if (!$attendance) {
+            $attendance = Attendance::create([
+                'user_id' => $user->id,
+                'work_date' => $workDate,
+                'clock_in' => $workDate . ' ' . $request->clock_in,
+                'clock_out' => $workDate . ' ' . $request->clock_out,
+                'note' => $request->note,
+            ]);
+        } else {
+            $attendance->update([
+                'clock_in' => $workDate . ' ' . $request->clock_in,
+                'clock_out' => $workDate . ' ' . $request->clock_out,
+                'note' => $request->note,
+            ]);
+        }
 
         foreach ($request->breaks ?? [] as $index => $break) {
-
-            // 開始も終了も空なら何もしない
             if (empty($break['break_start']) && empty($break['break_end'])) {
                 continue;
             }
 
             if (isset($attendance->breakTimes[$index])) {
-
-                // 既存の休憩を更新
                 $attendance->breakTimes[$index]->update([
-                    'break_start' => $workDate.' '.$break['break_start'],
-                    'break_end' => $workDate.' '.$break['break_end'],
+                    'break_start' => $workDate . ' ' . $break['break_start'],
+                    'break_end' => $workDate . ' ' . $break['break_end'],
                 ]);
-
             } else {
-
-                // 新しい休憩を追加
                 $attendance->breakTimes()->create([
-                    'break_start' => $workDate.' '.$break['break_start'],
-                    'break_end' => $workDate.' '.$break['break_end'],
+                    'break_start' => $workDate . ' ' . $break['break_start'],
+                    'break_end' => $workDate . ' ' . $break['break_end'],
                 ]);
             }
         }

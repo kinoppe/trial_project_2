@@ -43,7 +43,7 @@
             <td>{{$record['break_time']}}</td>
             <td>{{$record['total_time']}}</td>
             <td>
-                <a class="staff-attendance-table__detail" href="/admin/attendance/{{$record['date_key']}}">詳細</a>
+                <a class="staff-attendance-table__detail" href="/admin/attendance/{{$record['date_key']}}?user_id={{$user->id}}">詳細</a>
             </td>
         </tr>
         @endforeach
