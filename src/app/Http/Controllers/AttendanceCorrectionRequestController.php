@@ -53,10 +53,34 @@ class AttendanceCorrectionRequestController extends Controller
     {
         $status = $request->input('status','pending');
 
-        $requests = AttendanceCorrectionRequest::with(['user','attendance'])
-            ->where('status',$status)
-            ->latest()
-            ->get();
+        $query = AttendanceCorrectionRequest::with(['attendance.user','breaks'])
+            ->where('status',$status);
+
+        if (!auth()->user()->is_admin) {
+            $query->whereHas('attendance', function ($q) {
+                $q->where('user_id', auth()->id());
+            });
+        } else {
+            $query->whereHas('attendance.user', function ($q) {
+                $q->where('is_admin', false);
+            });
+        }
+        $requests = $query->latest()->get();
         return view('request.index',compact('requests','status'));
+    }
+
+    public function show($id)
+    {
+        $correctionRequest = AttendanceCorrectionRequest::with([
+            'attendance.user',
+            'breaks'
+        ])->findOrFail($id);
+
+        if (!auth()->user()->is_admin &&
+            $correctionRequest->attendance->user_id !== auth()->id()) {
+            abort(403);
+        }
+
+        return view('admin.request.approve', compact('correctionRequest'));
     }
 }

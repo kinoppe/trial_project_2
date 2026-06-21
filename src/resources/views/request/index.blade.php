@@ -41,7 +41,17 @@
             <td>{{ $request->note }}</td>
             <td>{{ $request->created_at->format('Y/m/d') }}</td>
             <td>
-                <a class="request-table__detail" href="/attendance/detail/{{ $request->attendance->work_date }}">詳細</a>
+                @if(auth()->user()->is_admin)
+                    <a class="request-table__detail"
+                    href="/stamp_correction_request/approve/{{ $request->id }}">
+                        詳細
+                    </a>
+                @else
+                    <a class="request-table__detail"
+                    href="/stamp_correction_request/approve/{{ $request->id }}">
+                        詳細
+                    </a>
+                @endif
             </td>
         </tr>
         @endforeach

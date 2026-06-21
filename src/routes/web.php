@@ -6,6 +6,8 @@ use App\Http\Controllers\AttendanceCorrectionRequestController;
 use App\Http\Controllers\AdminAttendanceController;
 use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController;
 use App\Http\Controllers\AdminStaffController;
+use App\Http\Controllers\AdminCorrectionRequestController;
+
 
 
 /*
@@ -36,6 +38,8 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::post('/admin/attendance/{date}', [AdminAttendanceController::class, 'update']);
     Route::get('/admin/staff/list', [AdminStaffController::class, 'index']);
     Route::get('/admin/attendance/staff/{id}', [AdminStaffController::class, 'showAttendance']);
+    Route::get('/stamp_correction_request/approve/{attendance_correction_request_id}', [AdminCorrectionRequestController::class,'show']);
+    Route::post('/stamp_correction_request/approve/{attendance_correction_request_id}', [AdminCorrectionRequestController::class,'approve']);
 });
 
 Route::middleware('auth')->group(function () {
@@ -48,4 +52,5 @@ Route::middleware('auth')->group(function () {
     Route::get('/attendance/detail/{date}', [AttendanceController::class,'show']);
     Route::post('/attendance/detail/{date}', [AttendanceCorrectionRequestController::class,'store']);
     Route::get('/stamp_correction_request/list', [AttendanceCorrectionRequestController::class,'index']);
+    Route::get('/stamp_correction_request/approve/{attendance_correction_request_id}', [AdminCorrectionRequestController::class,'show']);
 });
