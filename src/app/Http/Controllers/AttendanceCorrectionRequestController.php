@@ -52,11 +52,12 @@ class AttendanceCorrectionRequestController extends Controller
     public function index(Request $request)
     {
         $status = $request->input('status','pending');
+        $isAdmin = auth()->user()->is_admin;
 
         $query = AttendanceCorrectionRequest::with(['attendance.user','breaks'])
             ->where('status',$status);
 
-        if (!auth()->user()->is_admin) {
+        if (!$isAdmin) {
             $query->whereHas('attendance', function ($q) {
                 $q->where('user_id', auth()->id());
             });
@@ -66,7 +67,7 @@ class AttendanceCorrectionRequestController extends Controller
             });
         }
         $requests = $query->latest()->get();
-        return view('request.index',compact('requests','status'));
+        return view('request.index',compact('requests','status','isAdmin'));
     }
 
     public function show($id)

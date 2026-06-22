@@ -56,17 +56,23 @@
         </tr>
     </table>
 
-    @if(auth()->user()->is_admin && $correctionRequest->status === 'pending')
-    <form action="/stamp_correction_request/approve/{{$correctionRequest->id}}" method="post">
-        @csrf
-        <div class="approve__button">
-            <button class="approve__button-submit" type="submit">承認</button>
-        </div>
-    </form>
+    @if($isAdmin && $correctionRequest->status === 'pending')
+        <form action="/stamp_correction_request/approve/{{ $correctionRequest->id }}" method="post">
+            @csrf
+            <div class="attendance-detail__button">
+                <button class="attendance-detail__button-submit" type="submit">
+                    承認
+                </button>
+            </div>
+        </form>
+
+    @elseif(!$isAdmin && $correctionRequest->status === 'pending')
+        <p class="attendance-detail__pending-message">*承認待ちのため修正はできません。</p>
+
     @else
-    <div class="request-approve">
-        <span class="approved">承認済み</span>
-    </div>
+        <div class="request-approve">
+            <span class="approved">承認済み</span>
+        </div>
     @endif
 </div>
 @endsection

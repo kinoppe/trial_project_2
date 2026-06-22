@@ -80,3 +80,8 @@
     border-radius: 4px;
     font-size: 18px;
 }
+
+.attendance-detail__pending-message {
+    text-align: right;
+    color: #ff3434;
+}

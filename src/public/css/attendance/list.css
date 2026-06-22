@@ -60,12 +60,12 @@
 }
 
 .attendance__icon-last {
-    width: 20px;
-    height: 20px;
+    width: 18px;
+    height: 18px;
 }
 
 .attendance__icon-next {
-    width: 20px;
-    height: 20px;
+    width: 18px;
+    height: 18px;
     transform: scaleX(-1);
 }

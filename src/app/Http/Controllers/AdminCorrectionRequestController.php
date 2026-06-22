@@ -14,7 +14,9 @@ class AdminCorrectionRequestController extends Controller
             'breaks'
         ])->findOrFail($attendance_correct_request_id);
 
-        return view('admin.request.approve',compact('correctionRequest'));
+        $isAdmin = auth()->user()->is_admin;
+
+        return view('admin.request.approve',compact('correctionRequest','isAdmin'));
     }
 
     public function approve($id)
