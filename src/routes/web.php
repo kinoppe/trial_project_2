@@ -38,6 +38,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::post('/admin/attendance/{date}', [AdminAttendanceController::class, 'update']);
     Route::get('/admin/staff/list', [AdminStaffController::class, 'index']);
     Route::get('/admin/attendance/staff/{id}', [AdminStaffController::class, 'showAttendance']);
+    Route::get('/admin/attendance/staff/{id}/csv', [AdminStaffController::class, 'export']);
     Route::get('/stamp_correction_request/approve/{attendance_correction_request_id}', [AdminCorrectionRequestController::class,'show']);
     Route::post('/stamp_correction_request/approve/{attendance_correction_request_id}', [AdminCorrectionRequestController::class,'approve']);
 });

@@ -157,6 +157,7 @@ class AttendanceController extends Controller
     public function show($date)
     {
         $attendance = Attendance::with(['user','breakTimes'])
+            ->where('user_id',auth()->id())
             ->whereDate('work_date',$date)
             ->first();
 

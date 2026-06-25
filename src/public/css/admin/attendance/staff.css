@@ -70,12 +70,12 @@
     transform: scaleX(-1);
 }
 
-.attendance-csv__button {
+.export__button {
     margin-top: 50px;
     text-align: right;
 }
 
-.attendance-csv__button-submit {
+.export__button-submit {
     width: 150px;
     padding: 10px;
     background: #000;

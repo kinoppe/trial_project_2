@@ -49,8 +49,11 @@
         @endforeach
     </table>
 
-    <div class="attendance-csv__button">
-        <button class="attendance-csv__button-submit" type="submit">CSV出力</button>
+    <div class="export__button">
+        <form action="/admin/attendance/staff/{{$user->id}}/csv" method="get">
+            <input type="hidden" name="month" value="{{$month->format('Y-m')}}">
+            <button class="export__button-submit" type="submit">CSV出力</button>
+        </form>
     </div>
 </div>
 @endsection

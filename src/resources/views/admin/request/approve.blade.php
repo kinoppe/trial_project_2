@@ -59,8 +59,8 @@
     @if($isAdmin && $correctionRequest->status === 'pending')
         <form action="/stamp_correction_request/approve/{{ $correctionRequest->id }}" method="post">
             @csrf
-            <div class="attendance-detail__button">
-                <button class="attendance-detail__button-submit" type="submit">
+            <div class="approve__button">
+                <button class="approve__button-submit" type="submit">
                     承認
                 </button>
             </div>
