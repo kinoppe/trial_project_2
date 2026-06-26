@@ -8,7 +8,6 @@ use Laravel\Fortify\Fortify;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
-use Laravel\Fortify\Contracts\RegisterResponse as RegisterResponseContract;
 use App\Http\Requests\RegisterRequest;
 use Laravel\Fortify\Http\Requests\RegisterRequest as FortifyRegisterRequest;
 use App\Http\Requests\LoginRequest;
@@ -37,15 +36,19 @@ class FortifyServiceProvider extends ServiceProvider
             return Limit::perMinute(1000)->by($request->email.$request->ip());
         });
 
-        // $this->app->bind(
-        //     FortifyLoginRequest::class,
-        //     LoginRequest::class
-        // );
+        $this->app->bind(
+            FortifyLoginRequest::class,
+            LoginRequest::class
+        );
 
         $this->app->bind(
             FortifyRegisterRequest::class,
             RegisterRequest::class
         );
+
+        Fortify::verifyEmailView(function () {
+            return view('auth.verify-email');
+        });
 
         $this->app->singleton(LoginResponse::class, function () {
             return new class implements LoginResponse {

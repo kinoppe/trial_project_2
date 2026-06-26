@@ -43,7 +43,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::post('/stamp_correction_request/approve/{attendance_correction_request_id}', [AdminCorrectionRequestController::class,'approve']);
 });
 
-Route::middleware('auth')->group(function () {
+Route::middleware('auth','verified')->group(function () {
     Route::get('/attendance', [AttendanceController::class,'index']);
     Route::post('/attendance', [AttendanceController::class,'clockIn']);
     Route::post('/attendance/clock_out', [AttendanceController::class,'clockOut']);
