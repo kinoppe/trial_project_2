@@ -7,6 +7,7 @@ use App\Http\Controllers\AdminAttendanceController;
 use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController;
 use App\Http\Controllers\AdminStaffController;
 use App\Http\Controllers\AdminCorrectionRequestController;
+use App\Http\Controllers\AttendanceReportController;
 
 
 
@@ -54,4 +55,5 @@ Route::middleware('auth','verified')->group(function () {
     Route::post('/attendance/detail/{date}', [AttendanceCorrectionRequestController::class,'store']);
     Route::get('/stamp_correction_request/list', [AttendanceCorrectionRequestController::class,'index']);
     Route::get('/stamp_correction_request/approve/{attendance_correction_request_id}', [AdminCorrectionRequestController::class,'show']);
+    Route::get('/attendance/report', [AttendanceReportController::class,'index']);
 });
