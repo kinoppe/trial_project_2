@@ -20,13 +20,13 @@
     margin-bottom: 28px;
 }
 
-.report-section__title {
+.my-report-section__title {
     font-size: 14px;
     font-weight: bold;
     margin-bottom: 12px;
 }
 
-.report-section__note {
+.my-report-section__standard-time {
     font-size: 11px;
     color: #555;
     margin-bottom: 10px;
@@ -38,7 +38,7 @@
 }
 
 .summary-card {
-    width: 33.333%;
+    width: 33%;
     background-color: #fff;
     border: 1px solid #ddd;
     border-radius: 6px;
@@ -57,14 +57,14 @@
     font-weight: bold;
 }
 
-.report-table {
+.my-report__table {
     width: 100%;
     border-collapse: collapse;
     background-color: #fff;
 }
 
-.report-table th,
-.report-table td {
+.my-report__table th,
+.my-report__table td {
     padding: 9px 12px;
     border-bottom: 1px solid #e5e5e5;
     font-size: 13px;
@@ -72,20 +72,6 @@
     text-align: left;
 }
 
-.report-table th {
-    color: #222;
-}
-
-@media screen and (max-width: 768px) {
-    .report {
-        width: 90%;
-    }
-
-    .summary-cards {
-        flex-direction: column;
-    }
-
-    .summary-card {
-        width: 100%;
-    }
+.my-report__table th {
+    color: #000;
 }
