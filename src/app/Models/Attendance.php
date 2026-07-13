@@ -13,12 +13,13 @@ class Attendance extends Model
         'work_date',
         'clock_in',
         'clock_out',
+        'note',
     ];
 
     protected $casts = [
         'work_date' => 'date',
-        'clock_in' => 'datetime:H:i',
-        'clock_out' => 'datetime:H:i',
+        'clock_in' => 'datetime',
+        'clock_out' => 'datetime',
     ];
 
     public function user()
