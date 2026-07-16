@@ -156,7 +156,7 @@
             <tr class="detail-table-row">
                 <th>備考</th>
                 <td>
-                    <textarea class="detail-table__note" name="note" id="">{{old('note')}}</textarea>
+                    <textarea class="detail-table__note" name="note" id="">{{old('note',$attendance?->note)}}</textarea>
                     <div class="form-error">
                     @error('note')
                         {{$message}}
