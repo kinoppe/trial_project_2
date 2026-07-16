@@ -48,7 +48,7 @@
                     </a>
                 @else
                     <a class="request-table__detail"
-                    href="/stamp_correction_request/approve/{{ $request->id }}">
+                    href="/attendance/detail/{{ \Carbon\Carbon::parse($request->attendance->work_date)->format('Y-m-d') }}">
                         詳細
                     </a>
                 @endif
