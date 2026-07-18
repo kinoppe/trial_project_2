@@ -17,10 +17,12 @@ docker-compose up -d --build
 1. docker-compose exec php bash
 2. composer install
 3. cp .env.example .env , 環境変数を適宜変更
+```
 DB_HOST=mysql
 DB_DATABASE=laravel_db
 DB_USERNAME=laravel_user
 DB_PASSWORD=laravel_pass
+```
 4. php artisan key:generate
 5. php artisan migrate
 6. php artisan db:seed
@@ -29,6 +31,7 @@ DB_PASSWORD=laravel_pass
 ## メール認証
 
 1. .envのメール設定を適宜変更
+
 MailHogの使用例
 ```
 MAIL_MAILER=smtp
