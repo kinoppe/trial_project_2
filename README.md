@@ -30,7 +30,7 @@ DB_PASSWORD=laravel_pass
 
 1. .envのメール設定を適宜変更
 MailHogの使用例
-
+```
 MAIL_MAILER=smtp
 MAIL_HOST=mailhog
 MAIL_PORT=1025
@@ -39,6 +39,7 @@ MAIL_PASSWORD=null
 MAIL_ENCRYPTION=null
 MAIL_FROM_ADDRESS=test@example.com
 MAIL_FROM_NAME="${APP_NAME}"
+```
 
 ## API仕様
 
@@ -75,10 +76,10 @@ php artisan test tests/Feature/Attendance/AttendanceTest.php
 
 ## 使用技術
 
-・PHP 8.1.34
-・Laravel 8.83.29
-・MySQL 8.0.36
-・nginx 1.21.1
+* PHP 8.1.34
+* Laravel 8.83.29
+* MySQL 8.0.36
+* nginx 1.21.1
 
 ## ER図
 
