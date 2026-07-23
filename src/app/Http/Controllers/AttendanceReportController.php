@@ -37,17 +37,37 @@ class AttendanceReportController extends Controller
 
     private function createSummary($attendances)
     {
-        $workMinutes = $attendances
-            ->map(fn ($attendance) => $this->getWorkMinutes($attendance))
-            ->filter(fn ($minutes) => $minutes > 0);
+        $totalWorkMinutes = 0;
+        $totalOverMinutes = 0;
+        $workDays = 0;
+
+        foreach ($attendances as $attendance) {
+            $workMinutes = $this->getWorkMinutes($attendance);
+
+            if ($workMinutes <= 0) {
+                continue;
+            }
+
+            $totalWorkMinutes += $workMinutes;
+
+            if ($workMinutes > self::STANDARD_WORK_MINUTES) {
+                $overMinutes = $workMinutes - self::STANDARD_WORK_MINUTES;
+                $totalOverMinutes += $overMinutes;
+            }
+
+            $workDays++;
+        }
+
+        if ($workDays > 0) {
+            $averageWorkMinutes = floor($totalWorkMinutes / $workDays);
+        } else {
+            $averageWorkMinutes = 0;
+        }
 
         return [
-            'total_work' => $workMinutes->sum(),
-            'total_over' => $workMinutes
-                ->sum(fn ($minutes) => max($minutes - self::STANDARD_WORK_MINUTES, 0)),
-            'average_work' => $workMinutes->count()
-                ? floor($workMinutes->average())
-                : 0,
+            'total_work' => $totalWorkMinutes,
+            'total_over' => $totalOverMinutes,
+            'average_work' => $averageWorkMinutes,
         ];
     }
 
