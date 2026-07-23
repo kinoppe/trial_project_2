@@ -73,33 +73,46 @@ class AttendanceReportController extends Controller
 
     private function createMonthlyReports($attendances)
     {
-        return collect(range(5, 0))
-            ->map(function ($number) use ($attendances) {
-                $month = now()->subMonths($number);
+        $monthlyReports = [];
 
-                $monthAttendances = $attendances->filter(function ($attendance) use ($month) {
-                    return Carbon::parse($attendance->work_date)->format('Y-m')
-                        === $month->format('Y-m');
-                });
+        for ($i = 5; $i >= 0; $i--) {
+            $month = now()->subMonths($i);
 
-                $workMinutes = $monthAttendances
-                    ->map(fn ($attendance) => $this->getWorkMinutes($attendance))
-                    ->filter(fn ($minutes) => $minutes > 0);
+            $totalWorkMinutes = 0;
+            $totalOverMinutes = 0;
 
-                return [
-                    'month' => $month->format('Y-m'),
-                    'work_time' => $this->formatMinutes($workMinutes->sum()),
-                    'over_time' => $this->formatMinutes(
-                        $workMinutes->sum(
-                            fn ($minutes) => max(
-                                $minutes - self::STANDARD_WORK_MINUTES,
-                                0
-                            )
-                        )
-                    ),
-                ];
-            })
-            ->toArray();
+            foreach ($attendances as $attendance) {
+                $attendanceMonth = Carbon::parse($attendance->work_date)
+                    ->format('Y-m');
+
+                $targetMonth = $month->format('Y-m');
+
+                if ($attendanceMonth !== $targetMonth) {
+                    continue;
+                }
+
+                $workMinutes = $this->getWorkMinutes($attendance);
+
+                if ($workMinutes <= 0) {
+                    continue;
+                }
+
+                $totalWorkMinutes += $workMinutes;
+
+                if ($workMinutes > self::STANDARD_WORK_MINUTES) {
+                    $overMinutes = $workMinutes - self::STANDARD_WORK_MINUTES;
+                    $totalOverMinutes += $overMinutes;
+                }
+            }
+
+            $monthlyReports[] = [
+                'month' => $month->format('Y-m'),
+                'work_time' => $this->formatMinutes($totalWorkMinutes),
+                'over_time' => $this->formatMinutes($totalOverMinutes),
+            ];
+        }
+
+        return $monthlyReports;
     }
 
     private function createAlerts($attendances)
