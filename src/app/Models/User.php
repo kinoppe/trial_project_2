@@ -22,7 +22,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'email',
         'password',
         'is_admin',
-        'email-verified_at',
+        'email_verified_at',
     ];
     
     public function attendances()

@@ -26,7 +26,7 @@ class AttendanceCorrectionRequestController extends Controller
             ]
         );
 
-        $AttendanceCorrectionRequest = AttendanceCorrectionRequest::create([
+        $correctionRequest = AttendanceCorrectionRequest::create([
             'attendance_id' => $attendance->id,
             'request_clock_in' => Carbon::parse($workDate . ' ' . $request->clock_in),
             'request_clock_out' => Carbon::parse($workDate . ' ' . $request->clock_out),
@@ -40,7 +40,7 @@ class AttendanceCorrectionRequestController extends Controller
             }
 
             AttendanceCorrectionBreak::create([
-                'attendance_correction_request_id' => $AttendanceCorrectionRequest->id,
+                'attendance_correction_request_id' => $correctionRequest->id,
                 'break_start' => Carbon::parse($workDate . ' ' . $break['break_start']),
                 'break_end' => Carbon::parse($workDate . ' ' . $break['break_end']),
             ]);

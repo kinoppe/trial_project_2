@@ -24,7 +24,7 @@ class FortifyServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        $this->app->singleton(FortifyRegisterRequest::class, RegisterRequest::class);
     }
 
     /**
@@ -32,9 +32,9 @@ class FortifyServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        // RateLimiter::for('login', function ($request) {
-        //     return Limit::perMinute(1000)->by($request->email.$request->ip());
-        // });
+        RateLimiter::for('login', function ($request) {
+            return Limit::perMinute(1000)->by($request->email.$request->ip());
+        });
 
         $this->app->bind(
             FortifyLoginRequest::class,

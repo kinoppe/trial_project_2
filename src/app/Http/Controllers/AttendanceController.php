@@ -17,7 +17,7 @@ class AttendanceController extends Controller
         ->whereDate('work_date',today())
         ->first();
 
-        if(!$attendance) {
+        if(!$attendance || !$attendance->clock_in) {
             $status = 'off_work';
             $statusLabel = '勤務外';
         } elseif($attendance->clock_out) {

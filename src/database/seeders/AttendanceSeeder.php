@@ -49,8 +49,10 @@ class AttendanceSeeder extends Seeder
 
     private function createUser1Attendances(User $user)
     {
+        $baseMonth = Carbon::today()->startOfMonth();
+
         for ($i = 5; $i >= 1; $i--) {
-            $month = Carbon::today()->subMonths($i);
+            $month = $baseMonth->copy()->subMonths($i);
             $dates = $this->weekdayDates($month,15);
             foreach($dates as $date) {
                 $this->createAttendance($user,$date,'09:00','18:00');
@@ -74,8 +76,10 @@ class AttendanceSeeder extends Seeder
 
     private function createAttendances(User $user)
     {
+        $baseMonth = Carbon::today()->startOfMonth();
+
         for ($i = 5; $i >= 0; $i--) {
-            $month = Carbon::today()->subMonths($i);
+            $month = $baseMonth->copy()->subMonths($i);
             $dates = $this->weekdayDates($month,17);
             foreach($dates as $date) {
                 $this->createAttendance($user,$date,'09:00','18:00');
