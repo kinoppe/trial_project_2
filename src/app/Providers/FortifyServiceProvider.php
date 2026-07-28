@@ -9,7 +9,6 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 use App\Http\Requests\RegisterRequest;
-use Laravel\Fortify\Http\Requests\RegisterRequest as FortifyRegisterRequest;
 use App\Http\Requests\LoginRequest;
 use Laravel\Fortify\Http\Requests\LoginRequest as FortifyLoginRequest;
 use Illuminate\Cache\RateLimiting\Limit;
@@ -24,7 +23,7 @@ class FortifyServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->app->singleton(FortifyRegisterRequest::class, RegisterRequest::class);
+        
     }
 
     /**
@@ -39,11 +38,6 @@ class FortifyServiceProvider extends ServiceProvider
         $this->app->bind(
             FortifyLoginRequest::class,
             LoginRequest::class
-        );
-
-        $this->app->bind(
-            FortifyRegisterRequest::class,
-            RegisterRequest::class
         );
 
         Fortify::verifyEmailView(function () {

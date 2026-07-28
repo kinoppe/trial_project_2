@@ -32,7 +32,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function correctionRequests()
     {
-        return $this->hasMany(AttendanceCorrectionRequest::class);
+        return $this->hasManyThrough(AttendanceCorrectionRequest::class,Attendance::class);
     }
 
     public function isAdmin():bool

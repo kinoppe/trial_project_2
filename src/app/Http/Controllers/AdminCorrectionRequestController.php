@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\AttendanceCorrectionRequest;
 
 class AdminCorrectionRequestController extends Controller
@@ -49,6 +48,8 @@ class AdminCorrectionRequestController extends Controller
 
         $correctionRequest->update([
             'status' => 'approved',
+            'approved_by' => auth()->id(),
+            'approved_at' => now()
         ]);
 
         return redirect('/stamp_correction_request/list');

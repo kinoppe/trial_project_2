@@ -34,7 +34,7 @@ class AdminAttendanceController extends Controller
                     ->diffInMinutes(\Carbon\Carbon::parse($break->break_end));
             });
 
-            $workMinutes = 0;
+            $workMinutes = '';
             if($attendance->clock_in && $attendance->clock_out) {
                 $workMinutes = Carbon::parse($attendance->clock_in)
                     ->diffInMinutes(Carbon::parse($attendance->clock_out))
