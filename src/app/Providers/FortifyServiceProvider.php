@@ -8,7 +8,6 @@ use Laravel\Fortify\Fortify;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
-use App\Http\Requests\RegisterRequest;
 use App\Http\Requests\LoginRequest;
 use Laravel\Fortify\Http\Requests\LoginRequest as FortifyLoginRequest;
 use Illuminate\Cache\RateLimiting\Limit;
@@ -23,7 +22,6 @@ class FortifyServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        
     }
 
     /**

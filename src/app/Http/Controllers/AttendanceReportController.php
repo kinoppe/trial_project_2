@@ -15,7 +15,7 @@ class AttendanceReportController extends Controller
         $attendances = Attendance::with('breakTimes')
             ->where('user_id', auth()->id())
             ->whereBetween('work_date', [
-                now()->subMonths(5)->startOfMonth()->toDateString(),
+                now()->startOfMonth()->subMonths(5)->toDateString(),
                 now()->endOfMonth()->toDateString(),
             ])
             ->get();
@@ -76,7 +76,7 @@ class AttendanceReportController extends Controller
         $monthlyReports = [];
 
         for ($i = 5; $i >= 0; $i--) {
-            $month = now()->subMonths($i);
+            $month = now()->startOfMonth()->subMonths($i);
 
             $totalWorkMinutes = 0;
             $totalOverMinutes = 0;
